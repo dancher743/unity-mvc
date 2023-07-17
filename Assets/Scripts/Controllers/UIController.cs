@@ -13,7 +13,7 @@ namespace CubeApplication.Controllers
             view = UnityEngine.Object.FindObjectOfType<UIView>();
         }
 
-        public void Dispose()
+        public void Clear()
         {
         }
 

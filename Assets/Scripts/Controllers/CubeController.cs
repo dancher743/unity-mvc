@@ -19,7 +19,7 @@ namespace CubeApplication.Controllers
             AddEventHandlers();
         }
 
-        public void Dispose()
+        public void Clear()
         {
             RemoveEventHandlers();
         }
