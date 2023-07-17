@@ -8,6 +8,12 @@ namespace CubeApplication.Views
         [SerializeField]
         private Text colorText;
 
-        public Text ColorText => colorText;
+        public string ColorText
+        {
+            set
+            {
+                colorText.text = value;
+            }
+        }
     }
 }
