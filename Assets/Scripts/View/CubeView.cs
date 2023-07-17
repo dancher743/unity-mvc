@@ -11,11 +11,11 @@ namespace CubeApplication.Views
         private MeshRenderer meshRenderer;
 
         public Color Color
-        { 
-            set 
+        {
+            set
             {
                 meshRenderer.material.color = value;
-            } 
+            }
         }
 
         private void OnMouseDown()

@@ -14,16 +14,17 @@ namespace CubeApplication.Controllers
         public UIController()
         {
             view = Object.FindObjectOfType<UIView>();
+
             model = new UIModel();
             model.ColorTextChanged += OnModelColorTextChanged;
         }
 
-        public void Clear()
+        void ICleareable.Clear()
         {
             model.ColorTextChanged -= OnModelColorTextChanged;
         }
 
-        public void ReceiveEvent(IControllerEvent controllerEvent)
+        void IEventReceivable.ReceiveEvent(IControllerEvent controllerEvent)
         {
             switch (controllerEvent)
             {

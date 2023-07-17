@@ -14,23 +14,13 @@ namespace CubeApplication.Controllers
         public CubeController()
         {
             view = Object.FindObjectOfType<CubeView>();
-            model = new CubeModel();
-
-            AddEventHandlers();
-        }
-
-        public void Clear()
-        {
-            RemoveEventHandlers();
-        }
-
-        private void AddEventHandlers()
-        {
             view.Clicked += OnViewClicked;
+
+            model = new CubeModel();
             model.ColorChanged += OnModelColorChanged;
         }
 
-        private void RemoveEventHandlers()
+        void ICleareable.Clear()
         {
             view.Clicked -= OnViewClicked;
             model.ColorChanged -= OnModelColorChanged;
