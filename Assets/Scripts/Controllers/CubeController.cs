@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class CubeController : IController
+    public class CubeController : IController, ICleareable
     {
         private CubeView view;
         private CubeModel model;

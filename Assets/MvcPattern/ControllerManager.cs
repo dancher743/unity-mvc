@@ -27,7 +27,7 @@ namespace MvcPattern
 
             if (controller != null)
             {
-                controller.Clear();
+                (controller as ICleareable)?.Clear();
                 controllers.Remove(controller.GetType());
             }
         }

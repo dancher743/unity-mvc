@@ -13,10 +13,6 @@ namespace CubeApplication.Controllers
             view = UnityEngine.Object.FindObjectOfType<UIView>();
         }
 
-        public void Clear()
-        {
-        }
-
         public void ReceiveEvent(IControllerEvent controllerEvent)
         {
             switch (controllerEvent)

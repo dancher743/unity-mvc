@@ -1,6 +1,6 @@
 ﻿namespace MvcPattern
 {
-    public interface IController : ICleareable
+    public interface IController
     {
         void ReceiveEvent(IControllerEvent controllerEvent);
     }
