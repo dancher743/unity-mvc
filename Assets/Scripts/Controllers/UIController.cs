@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class UIController : IController
+    public class UIController : IController, IEventReceivable
     {
         private readonly UIView view;
 

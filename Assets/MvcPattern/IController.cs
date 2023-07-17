@@ -2,6 +2,5 @@
 {
     public interface IController
     {
-        void ReceiveEvent(IControllerEvent controllerEvent);
     }
 }

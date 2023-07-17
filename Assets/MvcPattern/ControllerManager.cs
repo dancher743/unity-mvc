@@ -32,7 +32,7 @@ namespace MvcPattern
             }
         }
 
-        public static void DispatchEvent<TController>(IControllerEvent controllerEvent) where TController : IController
+        public static void DispatchEvent<TController>(IControllerEvent controllerEvent) where TController : IController, IEventReceivable
         {
             GetController<TController>()?.ReceiveEvent(controllerEvent);
         }
@@ -48,7 +48,7 @@ namespace MvcPattern
 
             foreach (var controller in controllers)
             {
-                controller?.ReceiveEvent(controllerEvent);
+                (controller as IEventReceivable)?.ReceiveEvent(controllerEvent);
             }
         }
 

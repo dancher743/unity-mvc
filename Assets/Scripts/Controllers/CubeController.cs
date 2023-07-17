@@ -24,10 +24,6 @@ namespace CubeApplication.Controllers
             RemoveEventHandlers();
         }
 
-        public void ReceiveEvent(IControllerEvent controllerEvent)
-        {
-        }
-
         private void AddEventHandlers()
         {
             view.Clicked += OnViewClicked;
