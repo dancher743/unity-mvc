@@ -10,7 +10,10 @@ namespace CubeApplication.View
         [SerializeField]
         private MeshRenderer meshRenderer;
 
-        public MeshRenderer MeshRenderer => meshRenderer;
+        public void SetColor(Color color)
+        {
+            meshRenderer.material.color = color;
+        }
 
         private void OnMouseDown()
         {

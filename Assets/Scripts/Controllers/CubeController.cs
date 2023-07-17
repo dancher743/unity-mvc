@@ -1,18 +1,20 @@
 ﻿using CubeApplication.Event;
 using CubeApplication.Managers;
+using CubeApplication.Models;
 using CubeApplication.View;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CubeApplication.Controllers
 {
     public class CubeController : IController
     {
-        private CubeView view; 
+        private CubeView view;
+        private CubeModel model;
 
         public CubeController()
         {
-            view = UnityEngine.Object.FindObjectOfType<CubeView>();
+            view = Object.FindObjectOfType<CubeView>();
+            model = new CubeModel();
 
             AddEventHandlers();
         }
@@ -29,19 +31,23 @@ namespace CubeApplication.Controllers
         private void AddEventHandlers()
         {
             view.OnMouseDownEvent += ViewOnMouseDownEvent;
+            model.ColorChanged += OnModelColorChanged;
         }
 
         private void RemoveEventHandlers()
         {
             view.OnMouseDownEvent -= ViewOnMouseDownEvent;
+            model.ColorChanged -= OnModelColorChanged;
         }
 
         private void ViewOnMouseDownEvent()
         {
-            Color color = Random.ColorHSV();
+            model.ChangeColor();
+        }
 
-            view.MeshRenderer.material.color = color;
-
+        private void OnModelColorChanged(Color color)
+        {
+            view.SetColor(color);
             ControllerManager.DispatchEvent<UIController>(ControllerEventPool.CreateEvent<CubeColorEvent, string>(color.ToString()));
         }
     }
