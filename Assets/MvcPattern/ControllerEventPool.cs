@@ -3,46 +3,11 @@ using System.Collections.Generic;
 
 namespace MvcPattern
 {
-    public class ControllerEventPool
+    public static class ControllerEventPool
     {
-        private Dictionary<Type, IControllerEvent> controllerEvents;
-
-        private static ControllerEventPool instance;
-
-        private static ControllerEventPool Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ControllerEventPool();
-                }
-
-                return instance;
-            }
-        }
-
-        private ControllerEventPool()
-        {
-            controllerEvents = new Dictionary<Type, IControllerEvent>();
-        }
+        private static readonly Dictionary<Type, IControllerEvent> controllerEvents = new Dictionary<Type, IControllerEvent>();
 
         public static TEvent CreateEvent<TEvent, TArg>(TArg arg) where TEvent : IControllerEvent
-        {
-            return Instance.CreateEventInstance<TEvent, TArg>(arg);
-        }
-
-        public static TEvent CreateEvent<TEvent>() where TEvent : IControllerEvent, new()
-        {
-            return Instance.CreateEventInstance<TEvent>();
-        }
-
-        public static void Clear()
-        {
-            Instance.controllerEvents.Clear();
-        }
-
-        private TEvent CreateEventInstance<TEvent, TArg>(TArg arg) where TEvent : IControllerEvent
         {
             IControllerEvent controllerEvent = GetEvent<TEvent>();
 
@@ -59,7 +24,7 @@ namespace MvcPattern
             return (TEvent)controllerEvent;
         }
 
-        private TEvent CreateEventInstance<TEvent>() where TEvent : IControllerEvent, new()
+        public static TEvent CreateEvent<TEvent>() where TEvent : IControllerEvent, new()
         {
             TEvent controllerEvent = GetEvent<TEvent>();
 
@@ -72,7 +37,7 @@ namespace MvcPattern
             return controllerEvent;
         }
 
-        private TControllerEvent GetEvent<TControllerEvent>()
+        private static TControllerEvent GetEvent<TControllerEvent>()
         {
             TControllerEvent controllerEvent = default;
 
