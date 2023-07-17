@@ -1,4 +1,4 @@
-﻿namespace CubeApplication.Controllers
+﻿namespace MvcPattern
 {
     public interface IController : IDisposableManaged
     {

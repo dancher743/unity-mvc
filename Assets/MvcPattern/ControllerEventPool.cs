@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CubeApplication.Controllers;
 
-namespace CubeApplication.Managers
+namespace MvcPattern
 {
     public class ControllerEventPool
     {
