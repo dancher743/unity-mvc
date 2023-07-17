@@ -1,23 +1,26 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CubeApplication.View
+namespace CubeApplication.Views
 {
     public class CubeView : MonoBehaviour
     {
-        public event Action OnMouseDownEvent;
+        public event Action Clicked;
 
         [SerializeField]
         private MeshRenderer meshRenderer;
 
-        public void SetColor(Color color)
-        {
-            meshRenderer.material.color = color;
+        public Color Color
+        { 
+            set 
+            {
+                meshRenderer.material.color = value;
+            } 
         }
 
         private void OnMouseDown()
         {
-            OnMouseDownEvent?.Invoke();
+            Clicked?.Invoke();
         }
     }
 }

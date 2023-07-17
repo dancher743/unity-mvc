@@ -1,6 +1,6 @@
-﻿using CubeApplication.Event;
+﻿using CubeApplication.Events;
 using CubeApplication.Models;
-using CubeApplication.View;
+using CubeApplication.Views;
 using MvcPattern;
 using UnityEngine;
 
@@ -8,8 +8,8 @@ namespace CubeApplication.Controllers
 {
     public class CubeController : IController, ICleareable
     {
-        private CubeView view;
-        private CubeModel model;
+        private readonly CubeView view;
+        private readonly CubeModel model;
 
         public CubeController()
         {
@@ -30,24 +30,24 @@ namespace CubeApplication.Controllers
 
         private void AddEventHandlers()
         {
-            view.OnMouseDownEvent += ViewOnMouseDownEvent;
+            view.Clicked += OnViewClicked;
             model.ColorChanged += OnModelColorChanged;
         }
 
         private void RemoveEventHandlers()
         {
-            view.OnMouseDownEvent -= ViewOnMouseDownEvent;
+            view.Clicked -= OnViewClicked;
             model.ColorChanged -= OnModelColorChanged;
         }
 
-        private void ViewOnMouseDownEvent()
+        private void OnViewClicked()
         {
             model.ChangeColor();
         }
 
         private void OnModelColorChanged(Color color)
         {
-            view.SetColor(color);
+            view.Color = color;
             ControllerManager.DispatchEvent<UIController>(ControllerEventPool.CreateEvent<CubeColorEvent, string>(color.ToString()));
         }
     }

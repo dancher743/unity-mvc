@@ -1,6 +1,6 @@
 ﻿using MvcPattern;
 
-namespace CubeApplication.Event
+namespace CubeApplication.Events
 {
     public class CubeColorEvent : IControllerEventWithArgs<string>
     {

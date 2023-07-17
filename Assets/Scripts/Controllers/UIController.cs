@@ -1,16 +1,17 @@
-﻿using CubeApplication.Event;
-using CubeApplication.View;
+﻿using CubeApplication.Events;
+using CubeApplication.Views;
 using MvcPattern;
+using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
     public class UIController : IController
     {
-        UIView view;
+        private readonly UIView view;
 
         public UIController()
         {
-            view = UnityEngine.Object.FindObjectOfType<UIView>();
+            view = Object.FindObjectOfType<UIView>();
         }
 
         public void ReceiveEvent(IControllerEvent controllerEvent)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace CubeApplication.View
+namespace CubeApplication.Views
 {
     public class UIView : MonoBehaviour
     {
