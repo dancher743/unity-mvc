@@ -1,7 +1,7 @@
 ﻿using CubeApplication.Event;
-using CubeApplication.Managers;
 using CubeApplication.Models;
 using CubeApplication.View;
+using MvcPattern;
 using UnityEngine;
 
 namespace CubeApplication.Controllers

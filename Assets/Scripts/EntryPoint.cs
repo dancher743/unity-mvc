@@ -1,5 +1,5 @@
 ﻿using CubeApplication.Controllers;
-using CubeApplication.Managers;
+using MvcPattern;
 using UnityEngine;
 
 namespace CubeApplication

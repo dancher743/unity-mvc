@@ -1,4 +1,4 @@
-﻿using CubeApplication.Controllers;
+﻿using MvcPattern;
 
 namespace CubeApplication.Event
 {

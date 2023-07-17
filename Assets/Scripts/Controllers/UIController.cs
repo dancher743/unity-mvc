@@ -1,5 +1,6 @@
 ﻿using CubeApplication.Event;
 using CubeApplication.View;
+using MvcPattern;
 
 namespace CubeApplication.Controllers
 {
