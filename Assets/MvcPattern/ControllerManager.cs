@@ -6,16 +6,18 @@ namespace MvcPattern
 {
     public static class ControllerManager
     {
-        private static readonly Dictionary<Type, IController> controllers = new Dictionary<Type, IController>();
+        private static readonly Dictionary<Type, IController> controllers = new();
 
         public static TController CreateController<TController>() where TController : IController, new()
         {
-            TController controller = GetController<TController>();
+            var controller = GetController<TController>();
 
             if (controller == null)
             {
+                var controllerKey = GetControllerKey<TController>();
                 controller = new TController();
-                controllers.Add(controller.GetType(), controller);
+
+                controllers.Add(controllerKey, controller);
             }
 
             return controller;
@@ -23,12 +25,14 @@ namespace MvcPattern
 
         public static void RemoveController<TController>() where TController : IController
         {
-            TController controller = GetController<TController>();
+            var controller = GetController<TController>();
 
             if (controller != null)
             {
                 (controller as ICleareable)?.Clear();
-                controllers.Remove(controller.GetType());
+
+                var controllerKey = GetControllerKey<TController>();
+                controllers.Remove(controllerKey);
             }
         }
 
@@ -39,11 +43,11 @@ namespace MvcPattern
             GetController<TController>()?.ReceiveEvent(controllerEvent);
         }
 
-        public static void DispatchEventAll<TControllerEvent>(TControllerEvent controllerEvent, bool isReverseOrder = false) where TControllerEvent : struct
+        public static void DispatchEventAll<TControllerEvent>(TControllerEvent controllerEvent, bool isInReverseOrder = false) where TControllerEvent : struct
         {
             var controllers = ControllerManager.controllers.Values;
 
-            if (isReverseOrder)
+            if (isInReverseOrder)
             {
                 controllers.Reverse();
             }
@@ -57,15 +61,19 @@ namespace MvcPattern
         private static TController GetController<TController>() where TController : IController
         {
             TController controller = default;
+            var controllerKey = GetControllerKey<TController>();
 
-            bool isExist = controllers.TryGetValue(typeof(TController), out IController cachedController);
-
-            if (isExist && cachedController is TController)
+            if (controllers.ContainsKey(controllerKey))
             {
-                controller = (TController)cachedController;
+                controller = (TController)controllers[controllerKey]; 
             }
 
             return controller;
+        }
+
+        private static Type GetControllerKey<TController>() where TController : IController
+        {
+            return typeof(TController);
         }
     }
 }
