@@ -32,12 +32,14 @@ namespace MvcPattern
             }
         }
 
-        public static void DispatchEvent<TController>(IControllerEvent controllerEvent) where TController : IController, IEventReceivable
+        public static void DispatchEvent<TController, TControllerEvent>(TControllerEvent controllerEvent) 
+            where TController : IController, IEventReceivable
+            where TControllerEvent : struct
         {
             GetController<TController>()?.ReceiveEvent(controllerEvent);
         }
 
-        public static void DispatchEventAll(IControllerEvent controllerEvent, bool isReverseOrder = false)
+        public static void DispatchEventAll<TControllerEvent>(TControllerEvent controllerEvent, bool isReverseOrder = false) where TControllerEvent : struct
         {
             var controllers = ControllerManager.controllers.Values;
 

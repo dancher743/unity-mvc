@@ -2,16 +2,11 @@
 
 namespace CubeApplication.Events
 {
-    public class CubeColorEvent : IControllerEventWithArgs<string>
+    public struct CubeColorEvent
     {
         public string Color { get; private set; }
 
         public CubeColorEvent(string color)
-        {
-            Color = color;
-        }
-
-        public void Update(string color)
         {
             Color = color;
         }

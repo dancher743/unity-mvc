@@ -24,7 +24,7 @@ namespace CubeApplication.Controllers
             model.ColorTextChanged -= OnModelColorTextChanged;
         }
 
-        void IEventReceivable.ReceiveEvent(IControllerEvent controllerEvent)
+        void IEventReceivable.ReceiveEvent<TControllerEvent>(TControllerEvent controllerEvent)
         {
             switch (controllerEvent)
             {

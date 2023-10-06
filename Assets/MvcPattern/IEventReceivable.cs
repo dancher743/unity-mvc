@@ -2,6 +2,6 @@
 {
     public interface IEventReceivable
     {
-        void ReceiveEvent(IControllerEvent controllerEvent);
+        void ReceiveEvent<TControllerEvent>(TControllerEvent controllerEvent) where TControllerEvent : struct;
     }
 }

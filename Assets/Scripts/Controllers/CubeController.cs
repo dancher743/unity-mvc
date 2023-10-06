@@ -34,7 +34,7 @@ namespace CubeApplication.Controllers
         private void OnModelColorChanged(Color color)
         {
             view.Color = color;
-            ControllerManager.DispatchEvent<UIController>(ControllerEventPool.CreateEvent<CubeColorEvent, string>(color.ToString()));
+            ControllerManager.DispatchEvent<UIController, CubeColorEvent>(new CubeColorEvent(color.ToString()));
         }
     }
 }
