@@ -1,21 +1,32 @@
 ﻿using CubeApplication.Controllers;
-using MvcPattern;
+using CubeApplication.Models;
+using CubeApplication.Views;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication
 {
     public class EntryPoint : MonoBehaviour
     {
+        [SerializeField]
+        private CubeView cubeView;
+
+        [SerializeField]
+        private UIView uiView;
+
+        private CubeController cubeController;
+        private UIController uiController;
+
         void Start()
         {
-            ControllerManager.CreateController<CubeController>();
-            ControllerManager.CreateController<UIController>();
+            cubeController = ControllerManager.CreateController<CubeController>(cubeView, new CubeModel());
+            uiController = ControllerManager.CreateController<UIController>();
         }
 
         private void OnDestroy()
         {
-            ControllerManager.RemoveController<CubeController>();
-            ControllerManager.RemoveController<UIController>();
+            ControllerManager.RemoveController(cubeController);
+            ControllerManager.RemoveController(uiController);
         }
     }
 }

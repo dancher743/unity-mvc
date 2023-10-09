@@ -1,7 +1,7 @@
-﻿namespace MvcPattern
+﻿namespace ModelViewController
 {
     public interface IEventReceivable
     {
-        void ReceiveEvent(IControllerEvent controllerEvent);
+        void ReceiveEvent<TEventData>(TEventData data) where TEventData : struct;
     }
 }

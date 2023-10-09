@@ -1,16 +1,13 @@
 ﻿using CubeApplication.Events;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using MvcPattern;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class UIController : IController, IEventReceivable, ICleareable
+    public class UIController : Controller<UIView, UIModel>, IEventReceivable, ICleareable
     {
-        private readonly UIView view;
-        private readonly UIModel model;
-
         public UIController()
         {
             view = Object.FindObjectOfType<UIView>();
@@ -24,12 +21,12 @@ namespace CubeApplication.Controllers
             model.ColorTextChanged -= OnModelColorTextChanged;
         }
 
-        void IEventReceivable.ReceiveEvent(IControllerEvent controllerEvent)
+        void IEventReceivable.ReceiveEvent<TEventData>(TEventData data)
         {
-            switch (controllerEvent)
+            switch (data)
             {
-                case CubeColorEvent colorEvent:
-                    model.ColorText = colorEvent.Color;
+                case CubeColorData cubeColorData:
+                    model.ColorText = cubeColorData.Color.ToString();
                     break;
 
             }

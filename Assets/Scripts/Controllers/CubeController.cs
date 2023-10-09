@@ -1,22 +1,19 @@
 ﻿using CubeApplication.Events;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using MvcPattern;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class CubeController : IController, ICleareable
+    public class CubeController : Controller<CubeView, CubeModel>, ICleareable
     {
-        private readonly CubeView view;
-        private readonly CubeModel model;
-
-        public CubeController()
+        public CubeController(CubeView view, CubeModel model)
         {
-            view = Object.FindObjectOfType<CubeView>();
-            view.Clicked += OnViewClicked;
+            this.view = view;
+            this.model = model;
 
-            model = new CubeModel();
+            view.Clicked += OnViewClicked;
             model.ColorChanged += OnModelColorChanged;
         }
 
@@ -34,7 +31,8 @@ namespace CubeApplication.Controllers
         private void OnModelColorChanged(Color color)
         {
             view.Color = color;
-            ControllerManager.DispatchEvent<UIController>(ControllerEventPool.CreateEvent<CubeColorEvent, string>(color.ToString()));
+
+            ControllerManager.DispatchEvent<UIController, CubeColorData>(new CubeColorData(color));
         }
     }
 }

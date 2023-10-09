@@ -588,6 +588,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49342f1f6092fb54f85077967b2dbd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubeView: {fileID: 1906776012}
+  uiView: {fileID: 1503638682}
 --- !u!1 &1503638680
 GameObject:
   m_ObjectHideFlags: 0
