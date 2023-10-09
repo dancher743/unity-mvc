@@ -13,12 +13,12 @@ namespace CubeApplication.Controllers
             view = Object.FindObjectOfType<UIView>();
 
             model = new UIModel();
-            model.ColorTextChanged += OnModelColorTextChanged;
+            model.ColorChanged += OnModelColorChanged;
         }
 
         void ICleareable.Clear()
         {
-            model.ColorTextChanged -= OnModelColorTextChanged;
+            model.ColorChanged -= OnModelColorChanged;
         }
 
         void IMessageReceivable.ReceiveMessage<TMessageData>(TMessageData data)
@@ -26,13 +26,13 @@ namespace CubeApplication.Controllers
             switch (data)
             {
                 case CubeColorData cubeColorData:
-                    model.ColorText = cubeColorData.Color.ToString();
+                    model.Color = cubeColorData.Color;
                     break;
 
             }
         }
 
-        private void OnModelColorTextChanged(string text)
+        private void OnModelColorChanged(string text)
         {
             view.ColorText = text;
         }
