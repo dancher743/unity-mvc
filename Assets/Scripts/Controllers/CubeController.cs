@@ -6,17 +6,14 @@ using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class CubeController : IController, ICleareable
+    public class CubeController : Controller<CubeView, CubeModel>, ICleareable
     {
-        private readonly CubeView view;
-        private readonly CubeModel model;
-
-        public CubeController()
+        public CubeController(CubeView view, CubeModel model)
         {
-            view = Object.FindObjectOfType<CubeView>();
-            view.Clicked += OnViewClicked;
+            this.view = view;
+            this.model = model;
 
-            model = new CubeModel();
+            view.Clicked += OnViewClicked;
             model.ColorChanged += OnModelColorChanged;
         }
 

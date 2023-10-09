@@ -6,11 +6,8 @@ using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class UIController : IController, IEventReceivable, ICleareable
+    public class UIController : Controller<UIView, UIModel>, IEventReceivable, ICleareable
     {
-        private readonly UIView view;
-        private readonly UIModel model;
-
         public UIController()
         {
             view = Object.FindObjectOfType<UIView>();

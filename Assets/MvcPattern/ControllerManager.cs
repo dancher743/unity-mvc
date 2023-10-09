@@ -8,15 +8,15 @@ namespace MvcPattern
     {
         private static readonly Dictionary<Type, IController> controllers = new();
 
-        public static TController CreateController<TController>() where TController : IController, new()
+        public static TController CreateController<TController>(params object[] data) where TController : IController
         {
-            var controller = GetController<TController>();
+            var controllerKey = GetControllerKey<TController>();
 
-            if (controller == null)
+            TController controller = default;
+
+            if (!controllers.ContainsKey(controllerKey))
             {
-                var controllerKey = GetControllerKey<TController>();
-                controller = new TController();
-
+                controller = (TController)Activator.CreateInstance(typeof(TController), data);
                 controllers.Add(controllerKey, controller);
             }
 
@@ -25,13 +25,13 @@ namespace MvcPattern
 
         public static void RemoveController<TController>() where TController : IController
         {
-            var controller = GetController<TController>();
+            var controllerKey = GetControllerKey<TController>();
 
-            if (controller != null)
+            if (controllers.ContainsKey(controllerKey))
             {
-                (controller as ICleareable)?.Clear();
+                var controller = controllers[controllerKey];
 
-                var controllerKey = GetControllerKey<TController>();
+                (controller as ICleareable)?.Clear();
                 controllers.Remove(controllerKey);
             }
         }
@@ -40,7 +40,14 @@ namespace MvcPattern
             where TController : IController, IEventReceivable
             where TControllerEvent : struct
         {
-            GetController<TController>()?.ReceiveEvent(controllerEvent);
+            var controllerKey = GetControllerKey<TController>();
+
+            if (controllers.ContainsKey(controllerKey))
+            {
+                var controller = controllers[controllerKey];
+
+                (controller as IEventReceivable)?.ReceiveEvent(controllerEvent);
+            }
         }
 
         public static void DispatchEventAll<TControllerEvent>(TControllerEvent controllerEvent, bool isInReverseOrder = false) where TControllerEvent : struct
@@ -58,18 +65,19 @@ namespace MvcPattern
             }
         }
 
-        private static TController GetController<TController>() where TController : IController
-        {
-            TController controller = default;
-            var controllerKey = GetControllerKey<TController>();
+        //private static TController GetController<TController>(out Type key) where TController : IController
+        //{
+        //    TController controller = default;
 
-            if (controllers.ContainsKey(controllerKey))
-            {
-                controller = (TController)controllers[controllerKey]; 
-            }
+        //    key = GetControllerKey<TController>();
 
-            return controller;
-        }
+        //    if (controllers.ContainsKey(key))
+        //    {
+        //        controller = (TController)controllers[key];
+        //    }
+
+        //    return controller;
+        //}
 
         private static Type GetControllerKey<TController>() where TController : IController
         {
