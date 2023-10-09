@@ -10,14 +10,12 @@ namespace MvcPattern
 
         public static TController CreateController<TController>(params object[] data) where TController : IController
         {
-            var controllerKey = GetControllerKey<TController>();
+            var controller = GetController<TController>(out Type key);
 
-            TController controller = default;
-
-            if (!controllers.ContainsKey(controllerKey))
+            if (controller == null)
             {
                 controller = (TController)Activator.CreateInstance(typeof(TController), data);
-                controllers.Add(controllerKey, controller);
+                controllers.Add(key, controller);
             }
 
             return controller;
@@ -25,14 +23,12 @@ namespace MvcPattern
 
         public static void RemoveController<TController>() where TController : IController
         {
-            var controllerKey = GetControllerKey<TController>();
+            var controller = GetController<TController>(out Type key);
 
-            if (controllers.ContainsKey(controllerKey))
+            if (controller != null)
             {
-                var controller = controllers[controllerKey];
-
                 (controller as ICleareable)?.Clear();
-                controllers.Remove(controllerKey);
+                controllers.Remove(key);
             }
         }
 
@@ -40,13 +36,11 @@ namespace MvcPattern
             where TController : IController, IEventReceivable
             where TControllerEvent : struct
         {
-            var controllerKey = GetControllerKey<TController>();
+            var controller = GetController<TController>(out _);
 
-            if (controllers.ContainsKey(controllerKey))
+            if (controller is not null and IEventReceivable receivable)
             {
-                var controller = controllers[controllerKey];
-
-                (controller as IEventReceivable)?.ReceiveEvent(controllerEvent);
+                receivable.ReceiveEvent(controllerEvent);
             }
         }
 
@@ -65,21 +59,21 @@ namespace MvcPattern
             }
         }
 
-        //private static TController GetController<TController>(out Type key) where TController : IController
-        //{
-        //    TController controller = default;
+        private static TController GetController<TController>(out Type key) where TController : IController
+        {
+            TController controller = default;
 
-        //    key = GetControllerKey<TController>();
+            key = GetKey<TController>();
 
-        //    if (controllers.ContainsKey(key))
-        //    {
-        //        controller = (TController)controllers[key];
-        //    }
+            if (controllers.ContainsKey(key))
+            {
+                controller = (TController)controllers[key];
+            }
 
-        //    return controller;
-        //}
+            return controller;
+        }
 
-        private static Type GetControllerKey<TController>() where TController : IController
+        private static Type GetKey<TController>() where TController : IController
         {
             return typeof(TController);
         }
