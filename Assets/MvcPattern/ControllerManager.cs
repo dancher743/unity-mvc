@@ -31,7 +31,7 @@ namespace ModelViewController
             }
         }
 
-        public static void DispatchEvent<TController, TEventData>(TEventData data) 
+        public static void DispatchEvent<TController, TEventData>(TEventData data)
             where TController : IController, IEventReceivable
             where TEventData : struct
         {
