@@ -1,4 +1,4 @@
-﻿namespace MvcPattern
+﻿namespace ModelViewController
 {
     public class Controller<TView, TModel> : IController
     {

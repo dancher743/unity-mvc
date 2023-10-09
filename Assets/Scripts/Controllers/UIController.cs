@@ -1,7 +1,7 @@
 ﻿using CubeApplication.Events;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using MvcPattern;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication.Controllers
@@ -21,12 +21,12 @@ namespace CubeApplication.Controllers
             model.ColorTextChanged -= OnModelColorTextChanged;
         }
 
-        void IEventReceivable.ReceiveEvent<TControllerEvent>(TControllerEvent controllerEvent)
+        void IEventReceivable.ReceiveEvent<TEventData>(TEventData data)
         {
-            switch (controllerEvent)
+            switch (data)
             {
-                case CubeColorEvent colorEvent:
-                    model.ColorText = colorEvent.Color;
+                case CubeColorData cubeColorData:
+                    model.ColorText = cubeColorData.Color.ToString();
                     break;
 
             }

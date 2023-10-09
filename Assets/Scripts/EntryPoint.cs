@@ -1,7 +1,7 @@
 ﻿using CubeApplication.Controllers;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using MvcPattern;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication
@@ -14,16 +14,19 @@ namespace CubeApplication
         [SerializeField]
         private UIView uiView;
 
+        private CubeController cubeController;
+        private UIController uiController;
+
         void Start()
         {
-            ControllerManager.CreateController<CubeController>(cubeView, new CubeModel());
-            ControllerManager.CreateController<UIController>();
+            cubeController = ControllerManager.CreateController<CubeController>(cubeView, new CubeModel());
+            uiController = ControllerManager.CreateController<UIController>();
         }
 
         private void OnDestroy()
         {
-            ControllerManager.RemoveController<CubeController>();
-            ControllerManager.RemoveController<UIController>();
+            ControllerManager.RemoveController(cubeController);
+            ControllerManager.RemoveController(uiController);
         }
     }
 }

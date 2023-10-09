@@ -2,49 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MvcPattern
+namespace ModelViewController
 {
     public static class ControllerManager
     {
-        private static readonly Dictionary<Type, IController> controllers = new();
+        private static readonly Dictionary<string, IController> controllers = new();
 
         public static TController CreateController<TController>(params object[] data) where TController : IController
         {
-            var controller = GetController<TController>(out Type key);
+            var controller = GetController<TController>(out string key);
 
             if (controller == null)
             {
                 controller = (TController)Activator.CreateInstance(typeof(TController), data);
                 controllers.Add(key, controller);
             }
-
             return controller;
         }
 
-        public static void RemoveController<TController>() where TController : IController
+        public static void RemoveController<TController>(TController controller) where TController : IController
         {
-            var controller = GetController<TController>(out Type key);
+            var key = GetKey(controller.GetType());
 
-            if (controller != null)
+            if (controllers.ContainsKey(key))
             {
                 (controller as ICleareable)?.Clear();
                 controllers.Remove(key);
             }
         }
 
-        public static void DispatchEvent<TController, TControllerEvent>(TControllerEvent controllerEvent) 
+        public static void DispatchEvent<TController, TEventData>(TEventData data) 
             where TController : IController, IEventReceivable
-            where TControllerEvent : struct
+            where TEventData : struct
         {
             var controller = GetController<TController>(out _);
 
             if (controller is not null and IEventReceivable receivable)
             {
-                receivable.ReceiveEvent(controllerEvent);
+                receivable.ReceiveEvent(data);
             }
         }
 
-        public static void DispatchEventAll<TControllerEvent>(TControllerEvent controllerEvent, bool isInReverseOrder = false) where TControllerEvent : struct
+        public static void DispatchEventAll<TEventData>(TEventData data, bool isInReverseOrder = false) where TEventData : struct
         {
             var controllers = ControllerManager.controllers.Values;
 
@@ -55,15 +54,15 @@ namespace MvcPattern
 
             foreach (var controller in controllers)
             {
-                (controller as IEventReceivable)?.ReceiveEvent(controllerEvent);
+                (controller as IEventReceivable)?.ReceiveEvent(data);
             }
         }
 
-        private static TController GetController<TController>(out Type key) where TController : IController
+        private static TController GetController<TController>(out string key) where TController : IController
         {
             TController controller = default;
 
-            key = GetKey<TController>();
+            key = GetKey(typeof(TController));
 
             if (controllers.ContainsKey(key))
             {
@@ -73,9 +72,9 @@ namespace MvcPattern
             return controller;
         }
 
-        private static Type GetKey<TController>() where TController : IController
+        private static string GetKey(Type type)
         {
-            return typeof(TController);
+            return type.Name;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CubeApplication.Events;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using MvcPattern;
+using ModelViewController;
 using UnityEngine;
 
 namespace CubeApplication.Controllers
@@ -31,7 +31,8 @@ namespace CubeApplication.Controllers
         private void OnModelColorChanged(Color color)
         {
             view.Color = color;
-            ControllerManager.DispatchEvent<UIController, CubeColorEvent>(new CubeColorEvent(color.ToString()));
+
+            ControllerManager.DispatchEvent<UIController, CubeColorData>(new CubeColorData(color));
         }
     }
 }
