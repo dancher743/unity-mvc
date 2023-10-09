@@ -31,19 +31,19 @@ namespace ModelViewController
             }
         }
 
-        public static void DispatchEvent<TController, TEventData>(TEventData data)
-            where TController : IController, IEventReceivable
-            where TEventData : struct
+        public static void DispatchMessageTo<TController, TMessageData>(TMessageData data)
+            where TController : IController, IMessageReceivable
+            where TMessageData : struct
         {
             var controller = GetController<TController>(out _);
 
-            if (controller is not null and IEventReceivable receivable)
+            if (controller is not null and IMessageReceivable receivable)
             {
-                receivable.ReceiveEvent(data);
+                receivable.ReceiveMessage(data);
             }
         }
 
-        public static void DispatchEventAll<TEventData>(TEventData data, bool isInReverseOrder = false) where TEventData : struct
+        public static void DispatchMessageToAll<TMessageData>(TMessageData data, bool isInReverseOrder = false) where TMessageData : struct
         {
             var controllers = ControllerManager.controllers.Values;
 
@@ -52,9 +52,9 @@ namespace ModelViewController
                 controllers.Reverse();
             }
 
-            foreach (var controller in controllers)
+            foreach (var receivable in controllers.Cast<IMessageReceivable>())
             {
-                (controller as IEventReceivable)?.ReceiveEvent(data);
+                receivable.ReceiveMessage(data);
             }
         }
 

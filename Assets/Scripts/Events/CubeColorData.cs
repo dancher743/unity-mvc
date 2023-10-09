@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CubeApplication.Events
+namespace CubeApplication.Messages
 {
     public readonly struct CubeColorData
     {

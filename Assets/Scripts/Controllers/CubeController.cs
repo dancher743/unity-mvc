@@ -1,4 +1,4 @@
-﻿using CubeApplication.Events;
+﻿using CubeApplication.Messages;
 using CubeApplication.Models;
 using CubeApplication.Views;
 using ModelViewController;
@@ -32,7 +32,7 @@ namespace CubeApplication.Controllers
         {
             view.Color = color;
 
-            ControllerManager.DispatchEvent<UIController, CubeColorData>(new CubeColorData(color));
+            ControllerManager.DispatchMessageTo<UIController, CubeColorData>(new CubeColorData(color));
         }
     }
 }

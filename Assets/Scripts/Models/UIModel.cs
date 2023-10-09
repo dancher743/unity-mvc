@@ -1,20 +1,28 @@
 using System;
+using UnityEngine;
 
 namespace CubeApplication.Models
 {
     public class UIModel
     {
-        public event Action<string> ColorTextChanged;
+        public event Action<string> ColorChanged;
 
-        private string colorText;
+        private Color color;
 
-        public string ColorText
+        public Color Color
         {
             set
             {
-                colorText = value;
-                ColorTextChanged?.Invoke(colorText);
+                color = value;
+
+                var colorText = GetColorText(color);
+                ColorChanged?.Invoke(colorText);
             }
+        }
+
+        private string GetColorText(Color color)
+        {
+            return $"Current cube's color is {color}.";
         }
     }
 }

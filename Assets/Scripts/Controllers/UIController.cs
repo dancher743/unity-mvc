@@ -1,4 +1,4 @@
-﻿using CubeApplication.Events;
+﻿using CubeApplication.Messages;
 using CubeApplication.Models;
 using CubeApplication.Views;
 using ModelViewController;
@@ -6,33 +6,33 @@ using UnityEngine;
 
 namespace CubeApplication.Controllers
 {
-    public class UIController : Controller<UIView, UIModel>, IEventReceivable, ICleareable
+    public class UIController : Controller<UIView, UIModel>, IMessageReceivable, ICleareable
     {
         public UIController()
         {
             view = Object.FindObjectOfType<UIView>();
 
             model = new UIModel();
-            model.ColorTextChanged += OnModelColorTextChanged;
+            model.ColorChanged += OnModelColorChanged;
         }
 
         void ICleareable.Clear()
         {
-            model.ColorTextChanged -= OnModelColorTextChanged;
+            model.ColorChanged -= OnModelColorChanged;
         }
 
-        void IEventReceivable.ReceiveEvent<TEventData>(TEventData data)
+        void IMessageReceivable.ReceiveMessage<TMessageData>(TMessageData data)
         {
             switch (data)
             {
                 case CubeColorData cubeColorData:
-                    model.ColorText = cubeColorData.Color.ToString();
+                    model.Color = cubeColorData.Color;
                     break;
 
             }
         }
 
-        private void OnModelColorTextChanged(string text)
+        private void OnModelColorChanged(string text)
         {
             view.ColorText = text;
         }
