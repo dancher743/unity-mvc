@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Mvc;
+using System;
 using UnityEngine;
 
 namespace CubeApplication.Views
 {
-    public class CubeView : MonoBehaviour
+    public class CubeView : MonoBehaviour, IView
     {
         public event Action Clicked;
 

@@ -1,9 +1,10 @@
+using Mvc;
 using System;
 using UnityEngine;
 
 namespace CubeApplication.Models
 {
-    public class CubeModel
+    public class CubeModel : IModel
     {
         public event Action<Color> ColorChanged;
 
