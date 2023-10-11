@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Mvc;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CubeApplication.Views
 {
-    public class UIView : MonoBehaviour
+    public class UIView : MonoBehaviour, IView
     {
         [SerializeField]
         private Text colorText;
