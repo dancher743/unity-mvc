@@ -1,7 +1,7 @@
 ﻿using CubeApplication.Controllers;
 using CubeApplication.Models;
 using CubeApplication.Views;
-using ModelViewController;
+using Mvc;
 using UnityEngine;
 
 namespace CubeApplication
