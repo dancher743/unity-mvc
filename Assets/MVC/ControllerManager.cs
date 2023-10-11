@@ -38,6 +38,7 @@ namespace Mvc
                     Debug.LogError($"ControllerManager: Cannot create {type.Name}. Count of an agrs in data doesn't match with count of agrs {type.Name}'s constructor.");
                 }
             }
+
             return controller;
         }
 
