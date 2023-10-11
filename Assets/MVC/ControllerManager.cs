@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Mvc
 {
@@ -8,14 +9,34 @@ namespace Mvc
     {
         private static readonly Dictionary<string, IController> controllers = new();
 
+        public static TController CreateController<TController>() where TController : IController, new()
+        {
+            return CreateController<TController>(Array.Empty<object>());
+        }
+
+        public static TController CreateController<TController>(IView view, IModel model) where TController : IController
+        {
+            return CreateController<TController>(new object[] { view, model });
+        }
+
         public static TController CreateController<TController>(params object[] data) where TController : IController
         {
             var controller = GetController<TController>(out string key);
 
             if (controller == null)
             {
-                controller = (TController)Activator.CreateInstance(typeof(TController), data);
-                controllers.Add(key, controller);
+                var type = typeof(TController);
+                var isConstructorExists = type.GetConstructors().Any(ctr => ctr.GetParameters().Length == data.Length);
+
+                if (isConstructorExists)
+                {
+                    controller = (TController)Activator.CreateInstance(type, data);
+                    controllers.Add(key, controller);
+                }
+                else
+                {
+                    Debug.LogError($"ControllerManager: Cannot create {type.Name}. Count of an agrs in data doesn't match with count of agrs {type.Name}'s constructor.");
+                }
             }
             return controller;
         }

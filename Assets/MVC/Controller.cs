@@ -6,5 +6,15 @@
     {
         protected TView view;
         protected TModel model;
+
+        public Controller()
+        {
+        }
+
+        public Controller(TView view, TModel model)
+        {
+            this.view = view;
+            this.model = model;
+        }
     }
 }

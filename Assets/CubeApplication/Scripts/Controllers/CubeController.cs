@@ -8,11 +8,8 @@ namespace CubeApplication.Controllers
 {
     public class CubeController : Controller<CubeView, CubeModel>, ICleareable
     {
-        public CubeController(CubeView view, CubeModel model)
+        public CubeController(CubeView cubeView, CubeModel cubeModel) : base(cubeView, cubeModel)
         {
-            this.view = view;
-            this.model = model;
-
             view.Clicked += OnViewClicked;
             model.ColorChanged += OnModelColorChanged;
         }
