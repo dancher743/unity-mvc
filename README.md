@@ -1,2 +1,2 @@
 # unity-mvc
-Realization of MVC (Model-View-Controller) pattern in Unity Engine.
+Implementation of MVC (Model-View-Controller) architectural pattern via Unity engine 
