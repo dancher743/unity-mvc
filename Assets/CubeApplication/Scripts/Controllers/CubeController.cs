@@ -29,7 +29,7 @@ namespace CubeApplication.Controllers
         {
             view.Color = color;
 
-            ControllerManager.DispatchMessageTo<UIController, CubeColorData>(new CubeColorData(color));
+            ControllerManager.DispatchMessageTo<UIController, CubeColorData>(new CubeColorData() { Color = color });
         }
     }
 }
