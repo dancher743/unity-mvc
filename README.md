@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project is no longer supported. Try [MVP](https://github.com/dancher743/unity-mvc) instead of MVC.
+
 # unity-mvc
 Implementation of MVC (Model-View-Controller) architectural pattern via Unity engine.
 
